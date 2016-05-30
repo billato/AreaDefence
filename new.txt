@@ -1,1 +1,1 @@
-public void xri ()
+public void xri () {}
