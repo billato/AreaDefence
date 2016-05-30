@@ -4,11 +4,17 @@ using System.Collections;
 public class PathFollower: MonoBehaviour {
 	public Transform[] path;
 	public float speed = 5.0f;
+	public float rotationSpeed = 1.0f;
 	public float reachDist = 1.0f;
 	public int currentPoint = 0;
 
+	Quaternion neededRotation;
+	Quaternion interpolatedRotation;
+	Quaternion yourRotation;
+
 	// Use this for initialization
 	void Start () {
+
 	
 	}
 	
@@ -18,7 +24,8 @@ public class PathFollower: MonoBehaviour {
 		float dist = Vector3.Distance (path [currentPoint].position, transform.position);
 
 
-		transform.LookAt( Vector3.MoveTowards (transform.position, path [currentPoint].position, Time.deltaTime * speed) );
+		transform.LookAt( Vector3.MoveTowards (transform.position, path [currentPoint].position, Time.deltaTime * rotationSpeed) );
+		transform.Translate (0, 0, rotationSpeed * Time.deltaTime);
 
 
 		transform.position = Vector3.MoveTowards (transform.position, path [currentPoint].position, Time.deltaTime * speed);
