@@ -30,18 +30,23 @@ public class PathFollower: MonoBehaviour {
 
 		transform.position = Vector3.MoveTowards (transform.position, path [currentPoint].position, Time.deltaTime * speed);
 
-		Debug.Log( Vector3.MoveTowards (transform.position, path [currentPoint].position, Time.deltaTime * speed));
+		//Debug.Log( Vector3.MoveTowards (transform.position, path [currentPoint].position, Time.deltaTime * speed));
 			
 		if (dist <= reachDist) {
 			currentPoint++;
-		}
+		} else {
+		
 
+		
+		}
 		if (currentPoint >= path.Length) {
-			currentPoint = 0;
+			//currentPoint = 0;
+			Destroy(this.gameObject);
 		}
 	}
 
-	void onDrawGizmos(){
+
+	  void onDrawGizmos(){
 		if (path.Length > 0) {
 			for (int i = 0; i < path.Length; i++) {
 				if (path [i] != null) {
@@ -50,5 +55,6 @@ public class PathFollower: MonoBehaviour {
 			}
 		}
 	}
+
 
 }
