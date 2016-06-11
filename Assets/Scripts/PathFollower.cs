@@ -57,4 +57,17 @@ public class PathFollower: MonoBehaviour {
 	}
 
 
+
+	void OnTriggerEnter(Collider other){
+
+		if (other.gameObject.CompareTag ("Missile")) {
+			Destroy (other.gameObject);
+
+		}
+	
+	}
+
+
+
+
 }
