@@ -8,7 +8,8 @@ public class TurretPerimeter : MonoBehaviour {
 	private bool isPlaying = false;
 	private bool isFired = false;
 
-	private float firingTime = 0.5f;
+	private float delayToLockEnemy = 0.5f;
+	private float firingTime = 1.2f;
 
 	public Rigidbody missile;
 
@@ -19,17 +20,17 @@ public class TurretPerimeter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-	
-
+		
 	}
 
-	void OnTriggerEnter(Collider other){
+	IEnumerator OnTriggerEnter(Collider other){
 		
 		if (other.gameObject.CompareTag("target")){
 			//other.gameObject.SetActive (false);
 			//GameManager.GetInstance ().increaseScore();
 					
+			yield return new WaitForSeconds(delayToLockEnemy);
+
 			StartCoroutine(fire());
 
 		}
@@ -40,14 +41,23 @@ public class TurretPerimeter : MonoBehaviour {
 
 		if (other.gameObject.CompareTag ("target")) {
 			
-			StartCoroutine(fire());
 
 			//turret head follow the enemy
 			this.transform.GetChild (2).LookAt  (other.transform.position); //Turret head looking at enemy 
 			//turret base rotate to the enemy
 			this.transform.GetChild (0).eulerAngles = new Vector3(0,this.transform.GetChild (2).eulerAngles.y,0);
+			this.transform.GetChild (3).eulerAngles = new Vector3(0,this.transform.GetChild (2).eulerAngles.y,0);
+
+			StartCoroutine(fire());
 
 
+			/*
+			//Camera head looking at enemy 
+			this.transform.GetChild (4).eulerAngles  = new Vector3(
+				this.transform.GetChild (2).eulerAngles.x,
+				this.transform.GetChild (2).eulerAngles.y,
+				this.transform.GetChild (2).eulerAngles.z); 
+			*/
 		}
 	}
 
@@ -61,18 +71,19 @@ public class TurretPerimeter : MonoBehaviour {
 
 			//play sound each time token is picked up
 			AudioSource.PlayClipAtPoint (sounds [0], transform.position);
-			//Instantiate (missile, transform.position, transform.rotation);
+
 			Instantiate (missile
-				, this.transform.GetChild (2).GetChild (0).position //+ new Vector3(0,15,-10)
+				, this.transform.GetChild (2).GetChild (0).position 
 				,this.transform.GetChild (2).rotation);
 
 			yield return new WaitForSeconds(firingTime);
+
 
 			isPlaying = false;
 			isFired = false;
 			
 		}
-
-	
 	}
+
+
 }

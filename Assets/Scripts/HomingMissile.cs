@@ -3,8 +3,8 @@ using System.Collections;
 
 public class HomingMissile : MonoBehaviour {
 
-	public float missileVelocity = 300;
-	public 	float turn = 20;
+	public float missileVelocity = 50;
+	public 	float turn = 10;
 	public Rigidbody homingMissile;
 	public float fuseDelay;
 	public GameObject missileMod;
@@ -44,11 +44,19 @@ public class HomingMissile : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (target == null || homingMissile == null) 
+		if (target == null || homingMissile == null) {
+			//push missile forward
+			homingMissile.velocity = transform.forward * missileVelocity;
+
 			return;
-		
+		}
+
+
 		//push missile forward
 		homingMissile.velocity = transform.forward * missileVelocity;
+
+
+
 
 		Vector3 tmp = target.position - transform.position;
 
