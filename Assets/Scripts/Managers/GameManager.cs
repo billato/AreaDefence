@@ -18,8 +18,17 @@ public class GameManager:MonoBehaviour{
 	// Update is called once per frame
 	void Update () {
 
+		// Exit game if esc pressed
+		if (Input.GetKey(KeyCode.Escape))
+		{
+			Application.Quit();
+		}
+
+
 		//update scoreboard
         text.text = "Score: " + score;
+
+
 
 	}
 

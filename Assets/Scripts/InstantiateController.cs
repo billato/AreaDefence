@@ -5,7 +5,7 @@ public class InstantiateController : MonoBehaviour {
 
 	public int level = 0;
 
-	private float waitTimeUntilNext = 1.0f;
+	private float waitTimeUntilNext = 0.7f;
 
 	public Rigidbody enemy;
 
@@ -22,20 +22,22 @@ public class InstantiateController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-
+		if (Input.GetKeyDown (KeyCode.R)) {
+			StartCoroutine (respawn ());
+		}
 	}
 
 
 	IEnumerator respawn(){
-	
 		
-		
-		for (int i = 0; i < (level * 2) + 1; i++) { 
-				Instantiate (enemy
-					, respawnPosition.transform.position 
-					, respawnPosition.transform.rotation);
+		for (int i = 0; i < (level * 2) + 3; i++) { 
 
-				yield return new WaitForSeconds (this.waitTimeUntilNext);
+			yield return new WaitForSeconds (this.waitTimeUntilNext);
+
+			Instantiate (enemy , respawnPosition.transform.position , respawnPosition.transform.rotation);
+
+				
+
 			}
 		}
 
