@@ -13,15 +13,17 @@ public class PathFollower: MonoBehaviour {
 	Quaternion interpolatedRotation;
 	Quaternion yourRotation;
 
+
 	// Use this for initialization
 	void Start () {
+
 
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 		float dist = Vector3.Distance (path [currentPoint].position, transform.position);
 
 
@@ -57,6 +59,8 @@ public class PathFollower: MonoBehaviour {
 			}
 		}
 	}
+
+
 
 
 }

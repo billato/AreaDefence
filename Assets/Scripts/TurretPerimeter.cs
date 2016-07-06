@@ -31,7 +31,7 @@ public class TurretPerimeter : MonoBehaviour {
 					
 			yield return new WaitForSeconds(delayToLockEnemy);
 
-			StartCoroutine(fire());
+			//StartCoroutine(fire());
 
 		}
 	}

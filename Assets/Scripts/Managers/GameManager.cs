@@ -26,7 +26,7 @@ public class GameManager:MonoBehaviour{
 
 
 		//update scoreboard
-        text.text = "Score: " + score;
+		text.text = ""+score;
 
 
 

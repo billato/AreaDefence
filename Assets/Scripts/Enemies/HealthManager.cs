@@ -3,27 +3,55 @@ using System.Collections;
 
 public class HealthManager : MonoBehaviour{
 
-	private int health = 100;
+	private float maxHealth = 100f;
+	private float currentHealth;
 
-	public static int destroyBonus = 30;
+	public GameObject healthBar;
+	public GameObject currentHealthBar;
+
+	public static int destroyBonus = 40;
 
 	// Use this for initialization
 	void Start () {
+		currentHealth = maxHealth;
 
+		healthBar.transform.position = new Vector3 (
+			this.gameObject.transform.position.x,
+			this.gameObject.transform.position.y+13,
+			this.gameObject.transform.position.z
+		);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		healthBar.transform.position = new Vector3 (
+			this.gameObject.transform.position.x,
+			this.gameObject.transform.position.y+13,
+			this.gameObject.transform.position.z
+		);
+	}
+
+
+
+	// Health between [0.0f,1.0f] == (currentHealth / totalHealth)
+	public void SetHealthVisual(float healthNormalized){
+		currentHealthBar.transform.localScale = new Vector3( healthNormalized,
+			currentHealthBar.transform.localScale.y,
+			currentHealthBar.transform.localScale.z);
 	}
 
 
 	public void decreaseHealth(int damage){
-		health -= damage;
+		currentHealth -= damage;
 
-		if (this.health <= 0) {
+		float calcHealth = currentHealth / maxHealth; // if curr 80 / 100 = 0.8f
+		SetHealthVisual(calcHealth);
+
+		if (this.currentHealth <= 0) {
 				Debug.Log ("Exploded enemy!!!!");
 		}
+
+
 	}
 
 
@@ -39,7 +67,7 @@ public class HealthManager : MonoBehaviour{
 			Destroy (other.gameObject);
 
 
-			if (this.health <= 0) {
+			if (this.currentHealth <= 0) {
 
 				GameManager.score += destroyBonus;
 

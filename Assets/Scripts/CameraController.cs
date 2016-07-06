@@ -32,18 +32,21 @@ public class CameraController : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.C))
 		{
 			currentCameraIndex ++;
-			Debug.Log ("C button has been pressed. Switching to the next camera");
-			if (currentCameraIndex < cameras.Length)
+
+			Debug.Log ("[" + currentCameraIndex + "," + cameras.Length + "]   C button has been pressed. Switching to the next camera");
+			if (currentCameraIndex <= cameras.Length)
 			{
 				cameras[currentCameraIndex-1].gameObject.SetActive(false);
 				cameras[currentCameraIndex].gameObject.SetActive(true);
-				Debug.Log ("Camera with name: " + cameras [currentCameraIndex].GetComponent<Camera>().name + ", is now enabled");
+				Debug.Log ("[" + currentCameraIndex + "," + cameras.Length + "] ");
+					Debug.Log ("Camera with name: " + cameras [currentCameraIndex].GetComponent<Camera>().name + ", is now enabled");
 			}
 			else
 			{
 				cameras[currentCameraIndex-1].gameObject.SetActive(false);
 				currentCameraIndex = 0;
 				cameras[currentCameraIndex].gameObject.SetActive(true);
+				Debug.Log ("[" + currentCameraIndex + "," + cameras.Length + "] ");
 				Debug.Log ("Camera with name: " + cameras [currentCameraIndex].GetComponent<Camera>().name + ", is now enabled");
 			}
 		}
