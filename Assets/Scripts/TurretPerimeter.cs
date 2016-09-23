@@ -9,7 +9,7 @@ public class TurretPerimeter : MonoBehaviour {
 	private bool isFired = false;
 
 	private float delayToLockEnemy = 0.5f;
-	private float firingTime = 1.2f;
+	private float firingTime = 0.5f;
 
 	public Rigidbody missile;
 
@@ -24,8 +24,7 @@ public class TurretPerimeter : MonoBehaviour {
 	}
 
 	IEnumerator OnTriggerEnter(Collider other){
-		
-		if (other.gameObject.CompareTag("target")){
+		if (other.gameObject.CompareTag("Target")){
 			//other.gameObject.SetActive (false);
 			//GameManager.GetInstance ().increaseScore();
 					
@@ -34,12 +33,16 @@ public class TurretPerimeter : MonoBehaviour {
 			//StartCoroutine(fire());
 
 		}
+
+		if (other.gameObject.CompareTag ("Terrain")) {
+			Debug.LogError (other.gameObject.tag);
+		}
 	}
 
 
 	void OnTriggerStay(Collider other){
 
-		if (other.gameObject.CompareTag ("target")) {
+		if (other.gameObject.CompareTag ("Target")) {
 			
 
 			//turret head follow the enemy
@@ -59,6 +62,10 @@ public class TurretPerimeter : MonoBehaviour {
 				this.transform.GetChild (2).eulerAngles.z); 
 			*/
 		}
+
+
+
+
 	}
 
 

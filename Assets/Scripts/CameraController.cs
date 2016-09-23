@@ -4,16 +4,19 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 	public Camera[] cameras;
 	private int currentCameraIndex;
+	private int previousCameraIndex;
 
 	// Use this for initialization
 	void Start () {
+		previousCameraIndex = 0;
 		currentCameraIndex = 0;
 
 		//Turn all cameras off, except the first default one
 		for (int i=1; i<cameras.Length; i++) 
 		{
-			cameras[i].gameObject.SetActive(false);
+			((AudioListener) cameras [i].GetComponent (typeof(AudioListener))).enabled = false;
 
+			cameras[i].gameObject.SetActive(false);
 		}
 
 		//If any cameras were added to the controller, enable the first one
@@ -31,23 +34,55 @@ public class CameraController : MonoBehaviour {
 		//When we reach the end of the camera array, move back to the beginning or the array.
 		if (Input.GetKeyDown(KeyCode.C))
 		{
+			previousCameraIndex = currentCameraIndex;
 			currentCameraIndex ++;
 
-			Debug.Log ("[" + currentCameraIndex + "," + cameras.Length + "]   C button has been pressed. Switching to the next camera");
-			if (currentCameraIndex <= cameras.Length)
-			{
-				cameras[currentCameraIndex-1].gameObject.SetActive(false);
+
+			if (currentCameraIndex < cameras.Length) {
+			
+				//disable audio on previous camera
+				//((AudioListener) cameras [currentCameraIndex - 1].GetComponent (typeof(AudioListener))).enabled = false;
+
+				//disable current camera except default one
+				if (currentCameraIndex - 1 > 0) {
+					cameras [currentCameraIndex - 1].gameObject.SetActive (false);
+					((AudioListener)cameras [currentCameraIndex - 1].GetComponent (typeof(AudioListener))).enabled = false;
+
+				} 
+
+
+				//enable audio on current camera
+				((AudioListener) cameras [currentCameraIndex].GetComponent (typeof(AudioListener))).enabled = true;
+
+				//enable current camera
 				cameras[currentCameraIndex].gameObject.SetActive(true);
-				Debug.Log ("[" + currentCameraIndex + "," + cameras.Length + "] ");
-					Debug.Log ("Camera with name: " + cameras [currentCameraIndex].GetComponent<Camera>().name + ", is now enabled");
+
+
+
+				Debug.LogError ("[" + previousCameraIndex + "," + currentCameraIndex + "," + cameras.Length + "] " +
+					"C button has been pressed. Switching to the next camera (" + cameras [currentCameraIndex].GetComponent<Camera>().name + ").");
 			}
 			else
 			{
-				cameras[currentCameraIndex-1].gameObject.SetActive(false);
+				//disable audio on previous camera
+				((AudioListener) cameras [previousCameraIndex].GetComponent (typeof(AudioListener))).enabled = false;
+				//disable previous camera
+				cameras[previousCameraIndex].gameObject.SetActive(false);
+
+				//previousCameraIndex = 0;
 				currentCameraIndex = 0;
+
+				//enable audio on current camera
+				((AudioListener) cameras [currentCameraIndex].GetComponent (typeof(AudioListener))).enabled = true;
+
+				//enable current camera
 				cameras[currentCameraIndex].gameObject.SetActive(true);
-				Debug.Log ("[" + currentCameraIndex + "," + cameras.Length + "] ");
-				Debug.Log ("Camera with name: " + cameras [currentCameraIndex].GetComponent<Camera>().name + ", is now enabled");
+
+
+
+				Debug.LogError ("[" + previousCameraIndex + "," + currentCameraIndex + "," + cameras.Length + "] " +
+					"C button has been pressed. Switching to the next camera (" + cameras [currentCameraIndex].GetComponent<Camera>().name + ").");
+
 			}
 		}
 	}

@@ -36,7 +36,7 @@ public class InstantiateController : MonoBehaviour {
 
 			yield return new WaitForSeconds (this.waitTimeUntilNext);
 
-			Debug.Log ("Calling instantiate...");
+			//Debug.Log ("Calling instantiate...");
 
 
 			Instantiate (enemy , respawnPosition.transform.position , respawnPosition.transform.rotation);
