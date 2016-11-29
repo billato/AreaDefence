@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
+	private int level = 1;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -15,8 +17,8 @@ public class LevelManager : MonoBehaviour {
 	}
 
 
-	public void LoadLevel(string levelName){
-		SceneManager.LoadScene (levelName);
+	public void LoadLevel(int level){
+		SceneManager.LoadScene (level);
 	}
 
 	public void ExitApplication(){

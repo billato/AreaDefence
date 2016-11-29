@@ -12,11 +12,11 @@ public class CameraController : MonoBehaviour {
 		currentCameraIndex = 0;
 
 		//Turn all cameras off, except the first default one
-		for (int i=1; i<cameras.Length; i++) 
-		{
-			((AudioListener) cameras [i].GetComponent (typeof(AudioListener))).enabled = false;
-
-			cameras[i].gameObject.SetActive(false);
+		for (int i = 1; i < cameras.Length; i++) {
+			if (cameras [i] != null) {
+				((AudioListener)cameras [i].GetComponent (typeof(AudioListener))).enabled = false;
+				cameras [i].gameObject.SetActive (false);
+			}
 		}
 
 		//If any cameras were added to the controller, enable the first one
@@ -40,6 +40,8 @@ public class CameraController : MonoBehaviour {
 
 			if (currentCameraIndex < cameras.Length) {
 			
+
+
 				//disable audio on previous camera
 				//((AudioListener) cameras [currentCameraIndex - 1].GetComponent (typeof(AudioListener))).enabled = false;
 
@@ -57,9 +59,9 @@ public class CameraController : MonoBehaviour {
 				//enable current camera
 				cameras[currentCameraIndex].gameObject.SetActive(true);
 
+				Debug.Log("totalCameras:" + cameras.Length);
 
-
-				Debug.LogError ("[" + previousCameraIndex + "," + currentCameraIndex + "," + cameras.Length + "] " +
+				Debug.Log ("[" + previousCameraIndex + "," + currentCameraIndex + "," + cameras.Length + "] " +
 					"C button has been pressed. Switching to the next camera (" + cameras [currentCameraIndex].GetComponent<Camera>().name + ").");
 			}
 			else
@@ -86,4 +88,20 @@ public class CameraController : MonoBehaviour {
 			}
 		}
 	}
+
+
+	public void addCamera(Camera camera){
+		for (int i=1; i<cameras.Length; i++) 
+		{
+			if (cameras [i] == null) {
+
+				camera.enabled = true;
+				cameras [i] = camera;
+				break;
+			}
+		}
+	}
+
+
+
 }

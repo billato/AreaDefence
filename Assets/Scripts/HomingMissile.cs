@@ -8,6 +8,7 @@ public class HomingMissile : MonoBehaviour {
 	public Rigidbody homingMissile;
 	public float fuseDelay;
 	public GameObject missileMod;
+	public GameObject playerExplosion;
 
 	private Transform target;
 
@@ -40,13 +41,12 @@ public class HomingMissile : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		
-		//if (other.gameObject.CompareTag ("Terrain")) {
-		Debug.LogWarning ("terrain touched!!!! " + other.gameObject.tag);
-		//}
-
-		if (other.gameObject.CompareTag ("Terrain")) {
-		Debug.LogError ("TERRRAIN touched!!!! " + other.gameObject.tag);
+		if (other.gameObject.CompareTag ("Terrain") || other.gameObject.CompareTag ("Target")) {
+			//Debug.Log ("TERRRAIN touched!!!! by missile" + other.gameObject.tag);
+			Instantiate (playerExplosion, this.transform.position, this.transform.rotation);
+			Destroy (this.gameObject);
 		}
+
 	}
 
 

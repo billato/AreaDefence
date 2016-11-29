@@ -3,16 +3,20 @@ using System.Collections;
 
 public class HealthManager : MonoBehaviour{
 
-	private float maxHealth = 100f;
+
+	public AudioClip[] sounds;
+
+	public int maxHealth;
 	private float currentHealth;
 
 	public GameObject healthBar;
 	public GameObject currentHealthBar;
 
-	public static int destroyBonus = 40;
+	public int destroyBonus = 40;
 
 	// Use this for initialization
 	void Start () {
+		
 		currentHealth = maxHealth;
 
 		healthBar.transform.position = new Vector3 (
@@ -49,6 +53,7 @@ public class HealthManager : MonoBehaviour{
 
 		if (this.currentHealth <= 0) {
 				Debug.Log ("Exploded enemy!!!!");
+
 		}
 
 
@@ -66,19 +71,29 @@ public class HealthManager : MonoBehaviour{
 			//destroy missile
 			Destroy (other.gameObject);
 
-
 			if (this.currentHealth <= 0) {
 
 				GameManager.score += destroyBonus;
 
-			
+				//play sound each time token is picked up
+				AudioSource.PlayClipAtPoint (sounds [0], transform.position);
 
 				Destroy (this.gameObject);
 
+
+
+
+
 				//GameManager.GetInstance ().increaseScore (destroyBonus);
-
-
 			}
+
+
+		}
+
+		if (other.gameObject.CompareTag ("NavMeshAgentTarget")) {
+			
+			Destroy (this.gameObject);
+
 
 
 
